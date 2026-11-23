@@ -1,0 +1,59 @@
+---
+import "@fontsource-variable/figtree";
+import "../styles/global.css";
+import { ArrowDown, ArrowUpRight, CircuitBoard, GitBranch, Code2, Terminal, Activity } from "lucide-react";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { buttonVariants } from "@/components/ui/button";
+
+const projects = [
+  { name: "DevKit", path: "DevKit", category: "开发者工具箱", description: "在浏览器本地处理 JSON、编解码、加密和时间戳转换。", icon: Terminal, accent: "violet" },
+  { name: "Codex Pulse", path: "codex-pulse", category: "桌面应用", description: "在 macOS 和 Windows 跟踪 Codex 额度和 Token 用量，并接收额度重置提醒。", icon: Activity, accent: "blue" },
+  { name: "esp32-wirelab", path: "esp32-wirelab", category: "硬件实验室", description: "在浏览器里拖拽连接 ESP32，查阅引脚说明并模拟测试模块。", icon: CircuitBoard, accent: "green" },
+  { name: "BranchNote", path: "BranchNote", category: "Git 工作流", description: "按项目管理功能分支，预检合并冲突，批量创建 PR 或 MR。", icon: GitBranch, accent: "rose" },
+];
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="探索 FluentHaze 的开发工具与开源项目。" />
+    <title>FluentHaze · 产品门户</title>
+  </head>
+  <body>
+    <header class="frame bar">
+      <a class="brand" href="/" aria-label="FluentHaze 首页"><span aria-hidden="true">✦</span> FluentHaze</a>
+      <nav aria-label="主导航"><a class={buttonVariants({ variant: "ghost" })} href="https://github.com/FluentHaze"><Code2 data-icon="inline-start" /> GitHub</a></nav>
+    </header>
+    <main class="frame">
+      <section class="hero" aria-labelledby="home-title">
+        <div class="halo" aria-hidden="true"></div>
+        <h1 id="home-title">FluentHaze<span>.</span></h1>
+        <p>开发工具与开源项目</p>
+        <a class={buttonVariants({ size: "lg" })} href="#projects">浏览项目 <ArrowDown data-icon="inline-end" /></a>
+      </section>
+      <section id="projects" aria-labelledby="projects-title">
+        <h2 id="projects-title">产品与项目</h2>
+        <div class="projects">
+          {projects.map(({ name, path, category, description, icon: Icon, accent }) => (
+            <Card className="project" data-accent={accent}>
+              <CardHeader>
+                <div class="icon"><Icon size={22} aria-hidden="true" /></div>
+                <p class="category">{category}</p>
+                <CardTitle className="project-title"><h3>{name}</h3></CardTitle>
+                <CardDescription>{description}</CardDescription>
+              </CardHeader>
+              <CardContent className="project-preview">
+                <img src={`/projects/${path}.jpg`} alt={`${name} 站点预览`} width="1280" height="800" loading="lazy" />
+              </CardContent>
+              <CardFooter>
+                <a class={buttonVariants({ variant: "outline" })} aria-label={`访问 ${name}`} href={`/${path}/`}>访问站点 <ArrowUpRight data-icon="inline-end" /></a>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
+      </section>
+    </main>
+    <footer class="frame footer"><a href="https://github.com/FluentHaze">FluentHaze on GitHub</a></footer>
+  </body>
+</html>

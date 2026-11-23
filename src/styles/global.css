@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: #0c0d15;
+  --color-foreground: #f6f4ff;
+  --color-card: #151622;
+  --color-card-foreground: #f6f4ff;
+  --color-muted: #212235;
+  --color-muted-foreground: #b2b4c8;
+  --color-primary: #d5c8ff;
+  --color-primary-foreground: #19132b;
+  --color-border: #393a50;
+  --color-input: #393a50;
+  --color-ring: #c4acff;
+}
+
+:root { color-scheme: dark; }
+body {
+  margin: 0;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: "Figtree Variable", system-ui, sans-serif;
+}
+a:focus-visible { outline: 2px solid var(--color-ring); outline-offset: 4px; }
+.frame { width: min(1120px, calc(100% - 48px)); margin-inline: auto; }
+.bar { min-height: 76px; display: flex; align-items: center; justify-content: space-between; }
+.brand { font-size: 1.1rem; font-weight: 650; display: inline-flex; gap: .6rem; align-items: center; }
+.brand span { color: #c4acff; }
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 1.1rem;
+  min-height: clamp(340px, 56vw, 540px);
+  text-align: center;
+  overflow: clip;
+}
+.halo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at 55% 55%, #42238f91, transparent 48%),
+    radial-gradient(ellipse at 31% 35%, #173a7775, transparent 48%),
+    repeating-linear-gradient(0deg, #ac9cf21c 0 1px, transparent 1px 40px),
+    repeating-linear-gradient(90deg, #ac9cf21c 0 1px, transparent 1px 40px);
+  mask-image: radial-gradient(ellipse, #000 14%, transparent 71%);
+}
+.hero h1 { font-size: clamp(2.8rem, 10vw, 8rem); line-height: .94; font-weight: 720; letter-spacing: -.075em; }
+.hero h1 span { color: #ba9dff; }
+.hero p { color: #d1cbe2; font-size: clamp(1rem, 3vw, 1.3rem); margin-bottom: .6rem; }
+#projects { scroll-margin-top: 1.25rem; }
+h2 { font-size: 1.4rem; font-weight: 600; margin-bottom: 1.3rem; }
+.projects { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 1rem; }
+.project {
+  position: relative;
+  isolation: isolate;
+  grid-column: span 5;
+  min-height: 235px;
+  background: radial-gradient(ellipse at 96% 16%, color-mix(in srgb, var(--accent), transparent 78%), transparent 62%), var(--color-card);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+.project:nth-child(4n + 1), .project:nth-child(4n) { grid-column: span 7; }
+.project:hover, .project:focus-within { transform: translateY(-3px); box-shadow: 0 12px 36px #05050e80; }
+.project[data-accent="violet"] { --accent: #af86ff; }
+.project[data-accent="blue"] { --accent: #8bb2ff; }
+.project[data-accent="green"] { --accent: #7ae4bf; }
+.project[data-accent="rose"] { --accent: #f0a2c8; }
+.icon { color: var(--accent); margin-bottom: .45rem; }
+.category { font-size: .8rem; color: var(--accent); }
+.project-title { font-size: 1.5rem; letter-spacing: -.025em; }
+.project [data-slot="card-description"] { max-width: 32ch; line-height: 1.65; text-wrap: pretty; }
+.project [data-slot="card-footer"] { margin-top: auto; background: transparent; border-color: color-mix(in srgb, var(--accent), transparent 84%); }
+.project-preview img {
+  display: block;
+  width: 100%;
+  height: clamp(140px, 18vw, 210px);
+  object-fit: cover;
+  object-position: top;
+  border-radius: .6rem;
+  border: 1px solid var(--color-border);
+}
+.footer { padding-block: 3rem; color: var(--color-muted-foreground); font-size: .875rem; }
+.footer a:hover { text-decoration: underline; }
+@media (max-width: 680px) {
+  .frame { width: calc(100% - 32px); }
+  .projects { grid-template-columns: minmax(0, 1fr); }
+  .projects .project { grid-column: auto; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+  .hero h1, .hero p { animation: reveal 550ms ease-out both; }
+  .hero p { animation-delay: 90ms; }
+  @keyframes reveal { from { opacity: 0; filter: blur(5px); } to { opacity: 1; filter: blur(0); } }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project { transition: none; }
+  .project:hover, .project:focus-within { transform: none; }
+}
